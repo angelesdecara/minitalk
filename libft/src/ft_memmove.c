@@ -1,43 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/22 17:27:33 by angrodri          #+#    #+#             */
-/*   Updated: 2023/11/01 19:20:58 by angrodri         ###   ########.fr       */
+/*   Created: 2022/06/16 11:19:29 by angrodri          #+#    #+#             */
+/*   Updated: 2022/06/16 18:53:42 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	print_signal(int signal)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	static int	counter;
-	static char	message;
+	int	i;
 
-	message |= (signal == SIGUSR1);
-	counter ++;
-	if (counter == 8)
+	i = 0;
+	if ((char *) src < (char *) dst)
 	{
-		ft_printf("%c", message);
-		counter = 0;
-		message = 0;
+		while (len-- > 0)
+			((char *)dst)[len] = ((char *)src)[len];
 	}
-	else
-		message <<= 1;
-}
-
-int main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	ft_printf("%i", pid);
-	signal(SIGUSR1, print_signal);
-	signal(SIGUSR2, print_signal);
-	while (1)
-		pause();
-	return (1);
+	else if ((char *)dst < (char *)src)
+	{
+		while ((unsigned long)i < len)
+		{
+			((char *)dst)[i] = ((char *)src)[i];
+			i++;
+		}
+	}
+	return (dst);
 }

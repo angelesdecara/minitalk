@@ -1,43 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/22 17:27:33 by angrodri          #+#    #+#             */
-/*   Updated: 2023/11/01 19:20:58 by angrodri         ###   ########.fr       */
+/*   Created: 2022/07/14 16:13:19 by angrodri          #+#    #+#             */
+/*   Updated: 2022/07/14 16:21:11 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	print_signal(int signal)
+int	ft_lstsize(t_list *lst)
 {
-	static int	counter;
-	static char	message;
+	int	n;
 
-	message |= (signal == SIGUSR1);
-	counter ++;
-	if (counter == 8)
+	n = 0;
+	while (lst != NULL)
 	{
-		ft_printf("%c", message);
-		counter = 0;
-		message = 0;
+		n++;
+		lst = lst -> next;
 	}
-	else
-		message <<= 1;
-}
-
-int main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	ft_printf("%i", pid);
-	signal(SIGUSR1, print_signal);
-	signal(SIGUSR2, print_signal);
-	while (1)
-		pause();
-	return (1);
+	return (n);
 }

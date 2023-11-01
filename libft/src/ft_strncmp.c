@@ -1,43 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/22 17:27:33 by angrodri          #+#    #+#             */
-/*   Updated: 2023/11/01 19:20:58 by angrodri         ###   ########.fr       */
+/*   Created: 2022/06/16 19:51:28 by angrodri          #+#    #+#             */
+/*   Updated: 2022/06/22 14:08:55 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	print_signal(int signal)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	static int	counter;
-	static char	message;
+	int	n1;
+	int	n2;
 
-	message |= (signal == SIGUSR1);
-	counter ++;
-	if (counter == 8)
+	while (n > 0 && *s1 == *s2)
 	{
-		ft_printf("%c", message);
-		counter = 0;
-		message = 0;
+		n1 = (unsigned char) *s1;
+		n2 = (unsigned char) *s2;
+		if (!*s1)
+			break ;
+		n--;
+		s1++;
+		s2++;
 	}
+	if (n == 0)
+		return (0);
+	n1 = (unsigned char) *s1;
+	n2 = (unsigned char) *s2;
+	if (n1 > n2)
+		return (1);
+	if (n1 < n2)
+		return (-1);
 	else
-		message <<= 1;
-}
-
-int main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	ft_printf("%i", pid);
-	signal(SIGUSR1, print_signal);
-	signal(SIGUSR2, print_signal);
-	while (1)
-		pause();
-	return (1);
+		return (0);
 }

@@ -1,43 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/22 17:27:33 by angrodri          #+#    #+#             */
-/*   Updated: 2023/11/01 19:20:58 by angrodri         ###   ########.fr       */
+/*   Created: 2022/06/16 19:28:17 by angrodri          #+#    #+#             */
+/*   Updated: 2022/06/22 11:19:49 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	print_signal(int signal)
+char	*ft_strrchr(const char *s, int c)
 {
-	static int	counter;
-	static char	message;
+	int	len;
+	int	i;
 
-	message |= (signal == SIGUSR1);
-	counter ++;
-	if (counter == 8)
-	{
-		ft_printf("%c", message);
-		counter = 0;
-		message = 0;
-	}
+	len = ft_strlen((char *)s);
+	i = 0;
+	while (*(s + len) != (char)c && len > 0)
+		len--;
+	if (*(s + len) == (char)c)
+		return ((char *)(s + len));
 	else
-		message <<= 1;
-}
-
-int main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	ft_printf("%i", pid);
-	signal(SIGUSR1, print_signal);
-	signal(SIGUSR2, print_signal);
-	while (1)
-		pause();
-	return (1);
+		return (0);
 }

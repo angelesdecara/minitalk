@@ -1,43 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/22 17:27:33 by angrodri          #+#    #+#             */
-/*   Updated: 2023/11/01 19:20:58 by angrodri         ###   ########.fr       */
+/*   Created: 2022/06/17 12:06:59 by angrodri          #+#    #+#             */
+/*   Updated: 2022/06/22 16:38:10 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	print_signal(int signal)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	static int	counter;
-	static char	message;
-
-	message |= (signal == SIGUSR1);
-	counter ++;
-	if (counter == 8)
+	while (n-- > 0)
 	{
-		ft_printf("%c", message);
-		counter = 0;
-		message = 0;
+		if (*(unsigned char *)s == (unsigned char)c)
+			return ((unsigned char *)s);
+		s++;
 	}
-	else
-		message <<= 1;
-}
-
-int main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	ft_printf("%i", pid);
-	signal(SIGUSR1, print_signal);
-	signal(SIGUSR2, print_signal);
-	while (1)
-		pause();
-	return (1);
+	return (NULL);
 }

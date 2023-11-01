@@ -1,43 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/22 17:27:33 by angrodri          #+#    #+#             */
-/*   Updated: 2023/11/01 19:20:58 by angrodri         ###   ########.fr       */
+/*   Created: 2022/07/14 19:26:01 by angrodri          #+#    #+#             */
+/*   Updated: 2022/07/17 11:03:44 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	print_signal(int signal)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	static int	counter;
-	static char	message;
+	t_list	*mapa;
+	t_list	*dummy;
+	t_list	*newel;
 
-	message |= (signal == SIGUSR1);
-	counter ++;
-	if (counter == 8)
+	if (lst == NULL)
+		return (NULL);
+	mapa = NULL;
+	dummy = lst;
+	while (dummy)
 	{
-		ft_printf("%c", message);
-		counter = 0;
-		message = 0;
+		newel = ft_lstnew(f(dummy->content));
+		if (!newel)
+		{
+			ft_lstclear(&mapa, del);
+			return (NULL);
+		}
+		ft_lstadd_back(&mapa, newel);
+		dummy = dummy->next;
 	}
-	else
-		message <<= 1;
-}
-
-int main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	ft_printf("%i", pid);
-	signal(SIGUSR1, print_signal);
-	signal(SIGUSR2, print_signal);
-	while (1)
-		pause();
-	return (1);
+	return (mapa);
 }

@@ -1,43 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/22 17:27:33 by angrodri          #+#    #+#             */
-/*   Updated: 2023/11/01 19:20:58 by angrodri         ###   ########.fr       */
+/*   Created: 2022/07/08 17:12:02 by angrodri          #+#    #+#             */
+/*   Updated: 2023/07/26 20:56:40 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	print_signal(int signal)
+static int	vlarge(int *nbr)
 {
-	static int	counter;
-	static char	message;
-
-	message |= (signal == SIGUSR1);
-	counter ++;
-	if (counter == 8)
-	{
-		ft_printf("%c", message);
-		counter = 0;
-		message = 0;
-	}
-	else
-		message <<= 1;
+	write(1, "-2", 2);
+	*nbr = 147483648;
+	return (2);
 }
 
-int main(void)
+int	ft_putnbr(int n)
 {
-	pid_t	pid;
+	char		a;
+	int			c;
 
-	pid = getpid();
-	ft_printf("%i", pid);
-	signal(SIGUSR1, print_signal);
-	signal(SIGUSR2, print_signal);
-	while (1)
-		pause();
-	return (1);
+	c = 0;
+	if (n == -2147483648)
+		c = vlarge(&n);
+	if (n < 0)
+	{
+		write(1, "-", 1);
+		n = (-1) * n;
+		c = 1;
+	}
+	if (n >= 10)
+	{
+		c += ft_putnbr(n / 10);
+		n = n % 10;
+	}
+	if (n < 10)
+	{
+		a = n + '0';
+		write(1, &a, 1);
+		c++;
+	}
+	return (c);
 }

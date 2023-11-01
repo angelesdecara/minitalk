@@ -1,43 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/22 17:27:33 by angrodri          #+#    #+#             */
-/*   Updated: 2023/11/01 19:20:58 by angrodri         ###   ########.fr       */
+/*   Created: 2022/06/17 12:32:42 by angrodri          #+#    #+#             */
+/*   Updated: 2022/06/20 12:56:51 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	print_signal(int signal)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	static int	counter;
-	static char	message;
+	int	ns1;
+	int	ns2;
 
-	message |= (signal == SIGUSR1);
-	counter ++;
-	if (counter == 8)
+	ns1 = 0;
+	ns2 = 0;
+	while (n-- > 0)
 	{
-		ft_printf("%c", message);
-		counter = 0;
-		message = 0;
+		ns1 += *(unsigned char *)s1;
+		ns2 += *(unsigned char *)s2;
+		if (*(char *)s1 != *(char *)s2)
+			return (ns1 - ns2);
+		s1++;
+		s2++;
 	}
-	else
-		message <<= 1;
-}
-
-int main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	ft_printf("%i", pid);
-	signal(SIGUSR1, print_signal);
-	signal(SIGUSR2, print_signal);
-	while (1)
-		pause();
-	return (1);
+	return (ns1 - ns2);
 }

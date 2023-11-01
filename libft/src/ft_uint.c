@@ -1,43 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_uint.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/22 17:27:33 by angrodri          #+#    #+#             */
-/*   Updated: 2023/11/01 19:20:58 by angrodri         ###   ########.fr       */
+/*   Created: 2022/10/15 20:04:59 by angrodri          #+#    #+#             */
+/*   Updated: 2023/07/26 20:57:20 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	print_signal(int signal)
+int	ft_uint_print(unsigned int nbr)
 {
-	static int	counter;
-	static char	message;
+	char	a;
+	int		c;
 
-	message |= (signal == SIGUSR1);
-	counter ++;
-	if (counter == 8)
+	c = 0;
+	if (nbr >= 10)
 	{
-		ft_printf("%c", message);
-		counter = 0;
-		message = 0;
+		c += ft_uint_print(nbr / 10);
+		nbr = nbr % 10;
 	}
-	else
-		message <<= 1;
-}
-
-int main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	ft_printf("%i", pid);
-	signal(SIGUSR1, print_signal);
-	signal(SIGUSR2, print_signal);
-	while (1)
-		pause();
-	return (1);
+	if (nbr < 10)
+	{
+		a = (int)nbr + '0';
+		write(1, &a, 1);
+		c++;
+	}
+	return (c);
 }

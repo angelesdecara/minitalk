@@ -1,43 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   cliente.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/22 17:27:33 by angrodri          #+#    #+#             */
-/*   Updated: 2023/11/01 19:20:58 by angrodri         ###   ########.fr       */
+/*   Created: 2023/07/26 19:17:57 by angrodri          #+#    #+#             */
+/*   Updated: 2023/11/01 17:04:52 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include <unistd.h>
 
-void	print_signal(int signal)
-{
-	static int	counter;
-	static char	message;
-
-	message |= (signal == SIGUSR1);
-	counter ++;
-	if (counter == 8)
-	{
-		ft_printf("%c", message);
-		counter = 0;
-		message = 0;
-	}
-	else
-		message <<= 1;
-}
-
-int main(void)
+int	main(void)
 {
 	pid_t	pid;
 
-	pid = getpid();
-	ft_printf("%i", pid);
-	signal(SIGUSR1, print_signal);
-	signal(SIGUSR2, print_signal);
-	while (1)
-		pause();
-	return (1);
+	pid = fork();
+	if (pid == -1)
+		return (1);
+	if (pid == 0)
+	{
+		ft_printf("I'm the child, my internal pid is %d\n", pid);
+		ft_printf("Done\n");
+	}
+	else if (pid > 0)
+	{
+		ft_printf("I'm the parent, my child's pids is %d\n", pid);
+		while (1)
+			usleep (1);
+	}
+	return (0);
 }

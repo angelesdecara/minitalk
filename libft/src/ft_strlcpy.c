@@ -1,43 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/22 17:27:33 by angrodri          #+#    #+#             */
-/*   Updated: 2023/11/01 19:20:58 by angrodri         ###   ########.fr       */
+/*   Created: 2022/06/16 15:47:24 by angrodri          #+#    #+#             */
+/*   Updated: 2022/06/20 16:39:03 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	print_signal(int signal)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	static int	counter;
-	static char	message;
+	int	i;
 
-	message |= (signal == SIGUSR1);
-	counter ++;
-	if (counter == 8)
+	i = 0;
+	while ((unsigned long)i < dstsize && *(src + i) != '\0' && dstsize > 0)
 	{
-		ft_printf("%c", message);
-		counter = 0;
-		message = 0;
+		*(dst + i) = *(src + i);
+		i++;
 	}
-	else
-		message <<= 1;
-}
-
-int main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	ft_printf("%i", pid);
-	signal(SIGUSR1, print_signal);
-	signal(SIGUSR2, print_signal);
-	while (1)
-		pause();
-	return (1);
+	if ((unsigned long)i == dstsize)
+		i--;
+	if (dstsize > 0)
+		dst[i] = '\0';
+	return (ft_strlen((char *)src));
 }

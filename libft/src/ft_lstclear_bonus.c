@@ -1,43 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/22 17:27:33 by angrodri          #+#    #+#             */
-/*   Updated: 2023/11/01 19:20:58 by angrodri         ###   ########.fr       */
+/*   Created: 2022/07/14 19:09:43 by angrodri          #+#    #+#             */
+/*   Updated: 2022/07/14 19:20:09 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	print_signal(int signal)
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	static int	counter;
-	static char	message;
+	t_list	*mylist;
+	t_list	*tmp;
 
-	message |= (signal == SIGUSR1);
-	counter ++;
-	if (counter == 8)
+	if (*lst == NULL || !del)
+		return ;
+	mylist = *lst;
+	while (mylist)
 	{
-		ft_printf("%c", message);
-		counter = 0;
-		message = 0;
+		tmp = mylist->next;
+		del(mylist->content);
+		free(mylist);
+		mylist = tmp;
 	}
-	else
-		message <<= 1;
-}
-
-int main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	ft_printf("%i", pid);
-	signal(SIGUSR1, print_signal);
-	signal(SIGUSR2, print_signal);
-	while (1)
-		pause();
-	return (1);
+	*lst = NULL;
 }

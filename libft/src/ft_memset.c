@@ -1,43 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/22 17:27:33 by angrodri          #+#    #+#             */
-/*   Updated: 2023/11/01 19:20:58 by angrodri         ###   ########.fr       */
+/*   Created: 2022/06/13 13:43:52 by angrodri          #+#    #+#             */
+/*   Updated: 2022/06/16 18:52:04 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	print_signal(int signal)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	static int	counter;
-	static char	message;
+	int		i;
+	char	*bb;
 
-	message |= (signal == SIGUSR1);
-	counter ++;
-	if (counter == 8)
+	bb = b;
+	i = 0;
+	while ((unsigned long)i < len)
 	{
-		ft_printf("%c", message);
-		counter = 0;
-		message = 0;
+		*(bb + i) = c;
+		i++;
 	}
-	else
-		message <<= 1;
-}
-
-int main(void)
-{
-	pid_t	pid;
-
-	pid = getpid();
-	ft_printf("%i", pid);
-	signal(SIGUSR1, print_signal);
-	signal(SIGUSR2, print_signal);
-	while (1)
-		pause();
-	return (1);
+	return (b);
 }
