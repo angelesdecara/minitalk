@@ -6,17 +6,22 @@
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 17:27:33 by angrodri          #+#    #+#             */
-/*   Updated: 2023/11/09 21:55:18 by angrodri         ###   ########.fr       */
+/*   Updated: 2023/11/11 21:19:06 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
+void	sig_handler(int signum) /*we may need to add something for ACK*/
+{
+	ft_printf("\n Return message received by %d\n", signum);
+}
 void	print_signal(int signal)
 {
 	static int	counter;
 	static char	message;
 
+	/* server shall receive signal and show asap*/
 	message |= (signal == SIGUSR1);
 	counter ++;
 	if (counter == 8)
@@ -31,13 +36,18 @@ void	print_signal(int signal)
 
 int main(void)
 {
-	pid_t	pid;
+	pid_t				pid;
+	struct sigaction	act;
+
+	act.sa_flags = SA_SIGINFO;
+	act.sa_sighandler = &sig_handle;
+	sigemptyset(act.sa_mask);
 
 	pid = getpid();
 	ft_printf("%i", pid);
-	signal(SIGUSR1, print_signal);
-	signal(SIGUSR2, print_signal);
+	sigaction(SIGUSR1, &act, 0);
+	sigaction(SIGUSR2, &act, 0);
 	while (1)
 		pause();
-	return (1);
+	return (0);
 }

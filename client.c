@@ -6,18 +6,25 @@
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 18:54:57 by angrodri          #+#    #+#             */
-/*   Updated: 2023/11/09 21:55:14 by angrodri         ###   ########.fr       */
+/*   Updated: 2023/11/11 21:19:10 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "minitalk.h"
 
-void	sigint_handler(int signal)
+void	sig_handler(int signalid, siginfo info, void context)
 {
-	int	counter;
+	int			counter;
 	static char	message;
 
+	/* client? could print signal intercepted
 	//if (signal == SIGINT)
-	//	ft_printf("\nIntercepted SIGINT!\n");
+	//	ft_printf("\nIntercepted SIGINT!\n");*/
+	/* folowing medium oduwoledare*/
+	if signalid == SIGUSR2
+		counter++;
+	else if signalid == SIGUSR1
+		print bytes
+	/* v0 */
 	counter = 0;
 	while (counter < 8)
 	{
@@ -34,7 +41,8 @@ void	set_signal_action(void)
 	struct sigaction	act; //sigaction structure 
 
 	ft_bzero(&act, sizeof(act)); /*set all structure bits to 0 to avoid errors due to uninitialised vars*/
-	//act.sa_handler = &sigint_handler; /*signal handler set to default action*/
+	sigemptyset(act.sa_mask);
+	act.sa_handler = &sigint_handler; /*signal handler action*/
 	sigaction(SIGINT, &act, NULL); /* apply the action in the structure to SIGINT signal, ctrl-c*/
 }
 
