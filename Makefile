@@ -11,6 +11,7 @@ LIB = libft/libft.a
 
 SNAME = server
 CNAME = client
+NAME = minitalk
 
 $(OBJS)/%.o = $(SRCS)/%.c
 
@@ -22,13 +23,16 @@ client:
 	@make -C libft
 	@$(CC) $(CFLAGS) $(LIB) client.c -o $(CNAME)
 
-all:
+$(NAME): $(OBJS)
 	@make -C libft
-	$(OBJS)
+	@$(CC) $(CFLAGS) $(LIB) client.c -o $(CNAME)
+	@$(CC) $(CFLAGS) $(LIB) server.c -o $(SNAME)
+
+all: $(NAME)
 
 clean:
 	@make clean -C libft
-	$(RM) *.o 
+	$(RM) *.o server client
 
 fclean:
 	clean

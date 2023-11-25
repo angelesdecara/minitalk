@@ -6,15 +6,18 @@
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 17:27:33 by angrodri          #+#    #+#             */
-/*   Updated: 2023/11/11 21:19:06 by angrodri         ###   ########.fr       */
+/*   Updated: 2023/11/25 21:07:17 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	sig_handler(int signum) /*we may need to add something for ACK*/
+void	sig_handler(int signum, siginfo_t *info, void* context) /*we may need to add something for ACK*/
 {
+	(void)	context;
+
 	ft_printf("\n Return message received by %d\n", signum);
+	info->si_pid = signum;//ft_atoi(signum);
 }
 void	print_signal(int signal)
 {
@@ -40,8 +43,8 @@ int main(void)
 	struct sigaction	act;
 
 	act.sa_flags = SA_SIGINFO;
-	act.sa_sighandler = &sig_handle;
-	sigemptyset(act.sa_mask);
+	act.sa_sigaction = &sig_handler;
+	sigemptyset(&act.sa_mask);
 
 	pid = getpid();
 	ft_printf("%i", pid);

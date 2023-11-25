@@ -6,7 +6,7 @@
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 12:21:54 by angrodri          #+#    #+#             */
-/*   Updated: 2023/10/22 17:00:23 by angrodri         ###   ########.fr       */
+/*   Updated: 2023/11/11 16:33:26 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ char	*get_next_line(int fd);
 char	*ft_readbuffer(int fd, char *remainer);
 char	*ft_cpyfree(char *remainer, char *buffer);
 char	*ft_getline(char *remainer);
-char    *ft_nextremainer(char *allread);
+char	*ft_nextremainer(char *allread);
 
 #endif
