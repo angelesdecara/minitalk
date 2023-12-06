@@ -5,51 +5,70 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/22 17:27:33 by angrodri          #+#    #+#             */
-/*   Updated: 2023/11/25 21:07:17 by angrodri         ###   ########.fr       */
+/*   Created: 2023/12/06 19:21:43 by angrodri          #+#    #+#             */
+/*   Updated: 2023/12/06 21:56:25 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	sig_handler(int signum, siginfo_t *info, void* context) /*we may need to add something for ACK*/
+static int	g_server;
+
+void bin_to_char(int signum, char* c)
 {
+	if (signum == SIGUSR1)
+		*c = (*c << 1) | 1;
+	else if (signum == SIGUSR2)
+		*c <<=1;
+}
+
+static void sig_handler(int signum, siginfo_t *info, void* context)
+{
+	static int i;
+	static char c;
 	(void)	context;
 
-	ft_printf("\n Return message received by %d\n", signum);
-	info->si_pid = signum;//ft_atoi(signum);
-}
-void	print_signal(int signal)
-{
-	static int	counter;
-	static char	message;
+	if (g_server == 0)
+		ft_printf("pid number %i while i = %d  and c =  %c \n", info->si_pid ,i, c);
+	/*adding send signum and address of c to bin2char
+	bin_to_char(signum, &c);
+	ft_printf("c = %c\n", c);*/
 
-	/* server shall receive signal and show asap*/
-	message |= (signal == SIGUSR1);
-	counter ++;
-	if (counter == 8)
+	c |= (signum == SIGUSR1);
+	if (++i == 8)
 	{
-		ft_printf("%c", message);
-		counter = 0;
-		message = 0;
+		if (c == 0)
+		{
+			i = 0;
+			c = 0;
+			ft_printf("%i sent %c", info->si_pid, c);
+			g_server = 0;
+		}
+		ft_putchar_fd(c, 1);
+		c = 0;
+		i = 0;
 	}
 	else
-		message <<= 1;
+	   c <<= 1;	
+	if (signum == SIGUSR1)
+		kill(info->si_pid, SIGUSR1);
+	else
+		kill(info->si_pid, SIGUSR2);
 }
 
 int main(void)
 {
-	pid_t				pid;
-	struct sigaction	act;
+	struct sigaction 	action;
 
-	act.sa_flags = SA_SIGINFO;
-	act.sa_sigaction = &sig_handler;
-	sigemptyset(&act.sa_mask);
+	ft_printf("server id is = %i\n", getpid());
+	ft_bzero(&action, sizeof(action));
+	action.sa_sigaction =  &sig_handler;
+	action.sa_flags = SA_SIGINFO;
+	sigaddset(&action.sa_mask,SIGUSR1);
+	sigaddset(&action.sa_mask,SIGUSR2);
 
-	pid = getpid();
-	ft_printf("%i", pid);
-	sigaction(SIGUSR1, &act, 0);
-	sigaction(SIGUSR2, &act, 0);
+	sigaction(SIGUSR1, &action, 0);
+	sigaction(SIGUSR2, &action, 0);
 	while (1)
 		pause();
 	return (0);

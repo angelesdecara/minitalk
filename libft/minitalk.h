@@ -6,7 +6,7 @@
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 17:30:45 by angrodri          #+#    #+#             */
-/*   Updated: 2023/12/06 21:19:02 by angrodri         ###   ########.fr       */
+/*   Updated: 2023/12/06 21:56:01 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,22 @@
 
 # include <unistd.h>
 # include <signal.h>
-# include "libft/minitalk.h"
+# include <string.h>
+# include <stddef.h>
+# include <stdarg.h>
 
+int		ft_atoi(const char *str);
+void	ft_bzero(void *s, size_t n)
+size_t	flen(char *s);
+int		ft_putnbr_base(unsigned long int nbr, char *base);
+int		ft_putchar(char c);
+void	ft_putchar_fd(char c, int fd);
+int		ft_putnbr(int n);
+int		ft_putstr(char *s);
+int		ft_atoi(const char *arg);
+int		ft_printf(char const *str, ...);
+char	*ft_itoa(int n);
+int		ft_putptr(unsigned long int ptr);
+int		ft_uint_print(unsigned int nbr);
 
 #endif
