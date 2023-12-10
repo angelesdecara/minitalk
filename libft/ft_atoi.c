@@ -6,11 +6,11 @@
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:25:19 by angrodri          #+#    #+#             */
-/*   Updated: 2023/12/06 20:15:02 by angrodri         ###   ########.fr       */
+/*   Updated: 2023/12/10 15:33:25 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "lib.h"
 
 int	ft_atoi(const char *str)
 {

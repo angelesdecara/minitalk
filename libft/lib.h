@@ -6,12 +6,12 @@
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 17:30:45 by angrodri          #+#    #+#             */
-/*   Updated: 2023/12/06 21:56:01 by angrodri         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:54:48 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#ifndef LIBFT_H
+# define LIBFT_H
 
 # include <unistd.h>
 # include <signal.h>
@@ -20,7 +20,7 @@
 # include <stdarg.h>
 
 int		ft_atoi(const char *str);
-void	ft_bzero(void *s, size_t n)
+void	ft_bzero(void *s, size_t n);
 size_t	flen(char *s);
 int		ft_putnbr_base(unsigned long int nbr, char *base);
 int		ft_putchar(char c);

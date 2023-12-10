@@ -6,11 +6,11 @@
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:54:01 by angrodri          #+#    #+#             */
-/*   Updated: 2023/12/06 21:55:43 by angrodri         ###   ########.fr       */
+/*   Updated: 2023/12/10 15:33:38 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "lib.h"
 
 void	ft_bzero(void *s, size_t n)
 {

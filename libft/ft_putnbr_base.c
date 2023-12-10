@@ -6,11 +6,11 @@
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 17:28:38 by angrodri          #+#    #+#             */
-/*   Updated: 2023/12/06 19:12:16 by angrodri         ###   ########.fr       */
+/*   Updated: 2023/12/10 15:32:16 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "lib.h"
 
 static size_t	ft_strlen(char *s)
 {

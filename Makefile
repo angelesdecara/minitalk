@@ -1,46 +1,33 @@
 
 CC = gcc
-CFLAGS += -Wall -Wextra -Werror
-CFLAGS += -I ./$(INCDIR) -L lib
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
-SRCS = client.c server.c
-OBJS = $(SRCS:%.c = %.o)
-
-LIB = libft/lib.a
-
-SNAME = server
-CNAME = client
 NAME = minitalk
+SRC = server.c client.c
+OBJ = $(SRC:%.c=%.o)
 
-all: $(LIB) $(SNAME) $(CNAME)
+all: server client
 
-$(LIB): 
-	@make -C libft/
+lib: 
+	$(MAKE) -C libft
 
-lib:
-	@make -C libft/
+server: server.o lib
+	@$(CC) -o $@ $< -Llibft -lft
 
-$(SNAME): 
-	@make -C libft
-	@$(CC) $(CFLAGS) $(LIB) server.c -o $(SNAME)
+client: client.o lib
+	@$(CC) -o $@ $< -Llibft -lft
 
-$(CNAME):
-	@make -C libft
-	@$(CC) $(CFLAGS) $(LIB) client.c -o $(CNAME)
-
-$(NAME): $(OBJS)
-	@make -C libft
-	@$(CC) $(CFLAGS) $(LIB) client.c -o $(CNAME)
-	@$(CC) $(CFLAGS) $(LIB) server.c -o $(SNAME)
-
+%.o: %.c
+	$(CC) -c $(CFLAGS)  $?
 
 clean:
 	@make clean -C libft
-	$(RM) *.o server client
+	$(RM) $(OBJ) 
 
-fclean:
-	clean
-	$(RM) $(NAME)
+fclean: clean
+	@make fclean -C libft
+	$(RM) server client
 
 re: fclean all
+.PHONY: all fclean re all

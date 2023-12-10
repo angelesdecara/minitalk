@@ -6,11 +6,11 @@
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 16:46:14 by angrodri          #+#    #+#             */
-/*   Updated: 2023/12/06 18:36:09 by angrodri         ###   ########.fr       */
+/*   Updated: 2023/12/10 15:32:31 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "lib.h"
 
 void	ft_putchar_fd(char c, int fd)
 {

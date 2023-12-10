@@ -6,11 +6,11 @@
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 20:04:59 by angrodri          #+#    #+#             */
-/*   Updated: 2023/12/06 19:17:42 by angrodri         ###   ########.fr       */
+/*   Updated: 2023/12/10 15:30:51 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "lib.h"
 
 int	ft_uint_print(unsigned int nbr)
 {

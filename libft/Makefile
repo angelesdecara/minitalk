@@ -3,10 +3,10 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 RM = rm -f
 
-SRC = ft_atoi.c	ft_putchar.c ft_putnbr_base.c ft_putptr.c ft_uint.c ft_printf.c ft_putchar_fd.c ft_putnbr_fd.c ft_putstr.c
+SRC = ft_atoi.c ft_bzero.c ft_putchar.c ft_putnbr_base.c ft_putptr.c ft_uint.c ft_printf.c ft_putchar_fd.c ft_putnbr_fd.c ft_putstr.c
 OBJ = $(SRC:%.c=%.o)
 
-NAME = lib.a
+NAME = libft.a
 
 all: $(NAME)
 

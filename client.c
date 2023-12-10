@@ -6,42 +6,40 @@
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 20:04:49 by angrodri          #+#    #+#             */
-/*   Updated: 2023/12/06 21:11:54 by angrodri         ###   ########.fr       */
+/*   Updated: 2023/12/10 20:51:34 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minitalk.h"
 
-int char2bin(char msg, int pid)
+static void	byte2bin(char *msg, int pid)
 {
 	int		i;
-
-	i = 8;
-	while (i--)
-	{
-		if ((msg >> i) & 1)
-			kill(pid, SIGUSR1);
-		else
-			kill(pid, SIGUSR2);
-		usleep(1000);
-	}
-	return (1);
-}
-
-int	byte2bin(char *msg, int pid)
-{
-	int	i;
-	int	counter;
+	int		counter;
+	char	c;
 
 	i = 0;
 	counter = 0;
-	while (msg[i])
+	while (*msg)
 	{
-		counter += char2bin(msg[i], pid);
-		i++;
+		ft_printf("%c %d\n", *msg, pid);
+		i = 8;
+		c = *msg++;
+		while (i--)
+		{
+			if ((c >> i) & 1)
+				kill(pid, SIGUSR1);
+			else
+				kill(pid, SIGUSR2);
+			usleep(100);
+		}
 	}
-	counter += char2bin(msg[i], pid);
-	return (counter);
+	i = 8;
+	while (i--)
+	{
+		kill(pid, SIGUSR1);
+		usleep(100);
+	}
 }
 
 int main(int argc, char** argv)
@@ -54,6 +52,8 @@ int main(int argc, char** argv)
 		return (0);
 	}
 	pid = ft_atoi(argv[1]);
-	ft_printf("Sent %i\n", byte2bin(argv[2], pid));
+	byte2bin(argv[2], pid);
+	while (1)
+		pause();
 	return (0);
 }

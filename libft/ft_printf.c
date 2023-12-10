@@ -6,11 +6,11 @@
 /*   By: angrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 17:18:48 by angrodri          #+#    #+#             */
-/*   Updated: 2023/12/06 18:38:22 by angrodri         ###   ########.fr       */
+/*   Updated: 2023/12/10 15:33:00 by angrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "lib.h"
 
 int	printtype(char type, va_list arg)
 {
